@@ -45,7 +45,7 @@ Run these MCP calls to verify the environment is working:
 
 3. **Jettons available?** — Call `mcp__ton-mcp__get_jettons`. Should show USDT. Missing tokens will cause some evals to fail.
 
-4. **TON Docs MCP connected?** — Call `mcp__ton-docs__search_ton_docs` with a simple query like "jetton". If this fails, the ton-docs server is down or not connected.
+The `ton-docs` skill reads `https://docs.ton.org` over HTTP via the agent's web-fetch tool, so it needs no MCP server — just make sure web fetch is enabled and the host is reachable.
 
 If any check fails, **stop and tell the user** what's wrong instead of launching dozens of agents that will all fail.
 
@@ -150,20 +150,18 @@ MCP servers are configured in **`tests/.mcp.json`** (not the repo root). Claude 
     "ton-mcp": {
       "command": "npx",
       "args": ["-y", "@ton/mcp@alpha"]
-    },
-    "ton-docs": {
-      "type": "http",
-      "url": "https://docs.ton.org/mcp"
     }
   }
 }
 ```
 
-Verify they're connected:
+The `ton-docs` skill needs no MCP server — it reads `https://docs.ton.org` over HTTP via the agent's web-fetch tool.
+
+Verify it's connected:
 
 ```bash
 cd tests && claude mcp list
-# Should show ton-mcp and ton-docs
+# Should show ton-mcp
 ```
 
 ### Permissions
@@ -175,7 +173,6 @@ Evals run via `claude -p` (non-interactive mode), so all tools must be **pre-app
   "permissions": {
     "allow": [
       "mcp__ton-mcp__*",
-      "mcp__ton-docs__*",
       "Bash(npx @ton/mcp@alpha:*)",
       "Bash(npx -y @ton/mcp@alpha:*)",
       "Bash(curl:*)",
@@ -187,10 +184,10 @@ Evals run via `claude -p` (non-interactive mode), so all tools must be **pre-app
 ```
 
 Without these, most evals will fail with "needs your approval" because:
-- `mcp__ton-mcp__*` / `mcp__ton-docs__*` — allow all MCP tool calls
+- `mcp__ton-mcp__*` — allow all wallets MCP tool calls
 - `Bash(npx @ton/mcp@alpha:*)` — some skills route through CLI instead of MCP tools
 - `Bash(curl:*)` — xStocks evals fetch prices from the xStocks API
-- `WebFetch` / `WebSearch` — ton-docs evals may fetch documentation pages
+- `WebFetch` / `WebSearch` — ton-docs evals fetch documentation pages over HTTP
 
 ## Benchmark mode
 

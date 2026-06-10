@@ -2,44 +2,35 @@
 name: ton-docs
 description: >
   Searches and references official TON blockchain documentation, standards (TEPs), and SDK guides
-  via the TON Docs MCP server. Use this skill when answering questions about TON architecture,
+  by reading the public docs over HTTP. Use this skill when answering questions about TON architecture,
   smart contracts, FunC, Tact, Tolk, TL-B schemas, validators, sharding, message routing, wallet
   contracts, jetton standard (TEP-74), NFT standard (TEP-62), TON addresses, BOC encoding, or any
   TON protocol details.
 license: MIT
-compatibility: Requires the TON Docs MCP server (https://docs.ton.org/mcp)
 metadata:
   author: ton-tech
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # TON Documentation
 
-Search and reference the official TON blockchain documentation via the TON Docs MCP server.
+Search and reference the official TON blockchain documentation. The docs are public HTTP, indexed by
+`llms.txt`, so any agent with a web-fetch tool can read them directly — no MCP server or other hosted
+dependency is required.
 
-## MCP Server Setup
+## Doc URLs
 
-The TON Docs MCP server uses a remote HTTP transport — no local process to install.
+| Resource | URL |
+| -------- | --- |
+| Documentation index (`llms.txt`) | `https://docs.ton.org/llms.txt` |
+| Raw markdown for a page | `https://docs.ton.org/llms.mdx/<path>.md` |
+| Human-readable page | `https://docs.ton.org/<path>` |
 
-Add to your MCP settings:
-
-```json
-{
-  "mcpServers": {
-    "ton-docs": {
-      "type": "http",
-      "url": "https://docs.ton.org/mcp"
-    }
-  }
-}
-```
-
-## MCP Tools
-
-| Tool | Required Params | Description |
-| ---- | --------------- | ----------- |
-| `search_ton_docs` | `query` | Search across the TON Docs knowledge base for relevant content, code examples, API references, and guides |
-| `get_page_ton_docs` | `page` | Retrieve the full content of a specific documentation page by its path (e.g., from search results) |
+`llms.txt` is a nested list of markdown links pointing at per-page `.md` files, e.g.
+`- [Introduction](/llms.mdx/applications/apps-overview.md)`. Prefix any relative path you find there
+with `https://docs.ton.org` to fetch the raw markdown. When citing sources back to the user, link the
+human-readable page URL (drop the `llms.mdx/` prefix and the `.md` suffix), e.g.
+`https://docs.ton.org/applications/apps-overview`.
 
 ## When to Use
 
@@ -54,21 +45,26 @@ Add to your MCP settings:
 
 ## Workflow
 
-1. Identify the topic and its sub-aspects from the user's question
-2. Run multiple `search_ton_docs` calls with different targeted queries to cover all angles (e.g. one broad query + one SDK/tooling-specific query)
-3. From the combined search results, identify the 2–4 most relevant page paths
-4. Call `get_page_ton_docs` on those pages **in parallel** to retrieve full content efficiently
-5. If the pages reference other relevant pages (e.g. a "See also" section), fetch those too
-6. Synthesize the answer from all fetched pages, include code examples, and link to sources (prefix paths with `https://docs.ton.org/`)
+1. Identify the topic and its sub-aspects from the user's question.
+2. Fetch the index once: `https://docs.ton.org/llms.txt`. Scan it for entries whose titles/paths match
+   the topic and its sub-aspects (e.g. one core concept page + one SDK/tooling page).
+3. Select the 2–4 most relevant page paths from the index.
+4. Fetch those pages' raw markdown **in parallel** by prefixing each path with `https://docs.ton.org`
+   (e.g. `https://docs.ton.org/llms.mdx/<path>.md`).
+5. If the pages reference other relevant pages (e.g. a "See also" section), fetch those too.
+6. Synthesize the answer from all fetched pages, include code examples, and link to sources using the
+   human-readable page URLs (`https://docs.ton.org/<path>`).
 
 ## Gotchas
 
-- Search returns short snippets — always follow up with `get_page_ton_docs` to get full page content including code examples
-- Page paths from search results can be passed directly to `get_page_ton_docs` without modification
-- A good answer typically requires fetching 3–5 pages; a single page rarely covers the full picture
-- For smart contract questions, determine whether the user is working with FunC, Tact, or Tolk before providing examples
-- For SDK questions, determine the language (TypeScript/JavaScript via `@ton/ton`, Python via `pytoniq`, etc.)
-- TON docs are regularly updated — always search for fresh content rather than relying on cached knowledge
+- Use `llms.txt` to discover paths rather than guessing them — the index is the source of truth for
+  what pages exist and how they are named.
+- A good answer typically requires reading 3–5 pages; a single page rarely covers the full picture.
+- For smart contract questions, determine whether the user is working with FunC, Tact, or Tolk before
+  providing examples.
+- For SDK questions, determine the language (TypeScript/JavaScript via `@ton/ton`, Python via
+  `pytoniq`, etc.).
+- TON docs are regularly updated — always fetch fresh content rather than relying on cached knowledge.
 
 ## TEPs (TON Enhancement Proposals)
 

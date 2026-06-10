@@ -38,7 +38,7 @@ The **`tests/`** folder at the repo root is not an installable skill; it holds t
 
 | Skill | Description |
 | ----- | ----------- |
-| [docs/ton-docs](docs/ton-docs/) | Official TON documentation, TEPs, and SDK topics via the [TON Docs MCP](https://docs.ton.org/mcp) server |
+| [docs/ton-docs](docs/ton-docs/) | Official TON documentation, TEPs, and SDK topics, read over HTTP from [docs.ton.org](https://docs.ton.org) (indexed by [`llms.txt`](https://docs.ton.org/llms.txt)) |
 
 ## Installation
 

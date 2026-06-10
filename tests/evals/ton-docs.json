@@ -7,7 +7,7 @@
       "prompt": "How does jetton transfer work on TON?",
       "expected_output": "Explains jetton transfer mechanics using documentation",
       "expectations": [
-        "Calls search_ton_docs or query_docs_filesystem_ton_docs",
+        "Fetches TON docs over HTTP (e.g. https://docs.ton.org/llms.txt or a docs.ton.org page)",
         "Response explains jetton transfer with technical details"
       ]
     },
@@ -17,7 +17,7 @@
       "prompt": "Explain the TON wallet contract standard",
       "expected_output": "Explains wallet contract standards",
       "expectations": [
-        "Calls search_ton_docs or query_docs_filesystem_ton_docs",
+        "Fetches TON docs over HTTP (e.g. https://docs.ton.org/llms.txt or a docs.ton.org page)",
         "Response covers wallet contract versioning or standards"
       ]
     },
@@ -27,7 +27,7 @@
       "prompt": "What is the NFT standard on TON and how does ownership transfer?",
       "expected_output": "Explains TON NFT standard and transfer mechanism",
       "expectations": [
-        "Calls search_ton_docs or query_docs_filesystem_ton_docs",
+        "Fetches TON docs over HTTP (e.g. https://docs.ton.org/llms.txt or a docs.ton.org page)",
         "Response references TEP-62 or NFT standard details"
       ]
     }
