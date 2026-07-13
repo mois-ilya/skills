@@ -9,7 +9,7 @@ cd tests
 claude
 ```
 
-MCP servers (`ton-mcp`, `ton-docs`) are configured in `tests/.mcp.json` and will be picked up automatically. Eval files, workspace, and results all live here too.
+The `ton-mcp` server is configured in `tests/.mcp.json` and will be picked up automatically. Eval files, workspace, and results all live here too.
 
 Run evals per skill:
 
@@ -155,8 +155,6 @@ MCP servers are configured in **`tests/.mcp.json`** (not the repo root). Claude 
 }
 ```
 
-The `ton-docs` skill needs no MCP server — it reads `https://docs.ton.org` over HTTP via the agent's web-fetch tool.
-
 Verify it's connected:
 
 ```bash
@@ -267,7 +265,7 @@ No prose, no assertion tables, no raw JSON in `RESULTS.md`.
 
 | Problem | Fix |
 |---|---|
-| Subagents can't use MCP tools | `claude mcp list` must show `ton-mcp` and `ton-docs`. Run from `tests/` where `.mcp.json` lives. |
+| Subagents can't use MCP tools | `claude mcp list` must show `ton-mcp`. Run from `tests/` where `.mcp.json` lives. |
 | MCP tools not found | Make sure you launched Claude Code from `tests/`, not the repo root. MCP is configured in `tests/.mcp.json`. |
 | "No wallet configured" | `npx @ton/mcp@alpha get_wallet`. Create with `ton-create-wallet` skill if missing. |
 | Swap evals fail with "no quote" | Omniston has no route. Retry in a few minutes. |

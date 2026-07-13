@@ -58,7 +58,7 @@ page URL (drop the `llms/` prefix and the `/content.md` suffix), e.g. `https://d
 - Use `llms.txt` to discover paths rather than guessing them — the index is the source of truth for
   what pages exist and how they are named.
 - A good answer typically requires reading 3–5 pages; a single page rarely covers the full picture.
-- For smart contract questions, determine whether the user is working with FunC, Tact, or Tolk before
+- For smart contract questions, determine whether the user is working with FunC or Tolk before
   providing examples.
 - For SDK questions, determine the language (TypeScript/JavaScript via `@ton/ton`, Python via
   `pytoniq`, etc.).
