@@ -23,14 +23,12 @@ dependency is required.
 | Resource | URL |
 | -------- | --- |
 | Documentation index (`llms.txt`) | `https://docs.ton.org/llms.txt` |
-| Raw markdown for a page | `https://docs.ton.org/llms.mdx/<path>.md` |
+| Raw markdown for a page | `https://docs.ton.org/llms/<path>/content.md` |
 | Human-readable page | `https://docs.ton.org/<path>` |
 
-`llms.txt` is a nested list of markdown links pointing at per-page `.md` files, e.g.
-`- [Introduction](/llms.mdx/applications/apps-overview.md)`. Prefix any relative path you find there
-with `https://docs.ton.org` to fetch the raw markdown. When citing sources back to the user, link the
-human-readable page URL (drop the `llms.mdx/` prefix and the `.md` suffix), e.g.
-`https://docs.ton.org/applications/apps-overview`.
+`llms.txt` is a nested list of markdown links, each already a full `https://docs.ton.org/llms/<path>/content.md`
+URL — fetch it as-is, no prefixing needed. When citing sources back to the user, link the human-readable
+page URL (drop the `llms/` prefix and the `/content.md` suffix), e.g. `https://docs.ton.org/tolk/overview`.
 
 ## When to Use
 
@@ -49,8 +47,8 @@ human-readable page URL (drop the `llms.mdx/` prefix and the `.md` suffix), e.g.
 2. Fetch the index once: `https://docs.ton.org/llms.txt`. Scan it for entries whose titles/paths match
    the topic and its sub-aspects (e.g. one core concept page + one SDK/tooling page).
 3. Select the 2–4 most relevant page paths from the index.
-4. Fetch those pages' raw markdown **in parallel** by prefixing each path with `https://docs.ton.org`
-   (e.g. `https://docs.ton.org/llms.mdx/<path>.md`).
+4. Fetch those pages' raw markdown **in parallel** using the exact URLs found in the index
+   (e.g. `https://docs.ton.org/llms/<path>/content.md`).
 5. If the pages reference other relevant pages (e.g. a "See also" section), fetch those too.
 6. Synthesize the answer from all fetched pages, include code examples, and link to sources using the
    human-readable page URLs (`https://docs.ton.org/<path>`).
