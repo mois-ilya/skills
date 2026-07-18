@@ -3,7 +3,7 @@ name: ton-docs
 description: >
   Searches and references official TON blockchain documentation, standards (TEPs), and SDK guides
   by reading the public docs over HTTP. Use this skill when answering questions about TON architecture,
-  smart contracts, FunC, Tact, Tolk, TL-B schemas, validators, sharding, message routing, wallet
+  smart contracts, FunC, Tolk, TL-B schemas, validators, sharding, message routing, wallet
   contracts, jetton standard (TEP-74), NFT standard (TEP-62), TON addresses, BOC encoding, or any
   TON protocol details.
 license: MIT
@@ -33,7 +33,7 @@ page URL (drop the `llms/` prefix and the `/content.md` suffix), e.g. `https://d
 ## When to Use
 
 - User asks about TON blockchain concepts (workchains, sharding, validators, masterchain)
-- User asks about smart contract development (FunC, Tact, Tolk, Fift, TL-B schemas)
+- User asks about smart contract development (FunC, Tolk, Fift, TL-B schemas)
 - User asks about TON standards (TEP, jetton standard TEP-74, NFT standard TEP-62)
 - User asks about wallet contracts, message formats, or internal/external messages
 - User asks about TON addresses, BOC encoding, cell serialization
